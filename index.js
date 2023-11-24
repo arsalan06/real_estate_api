@@ -8,7 +8,9 @@ app.use(bodyParser.json());
 app.use(cors());
 // app.use(express.static(path.join(__dirname, 'uploads')))
 const featureRouter = require("./routes/featureRoutes");
+const propertyRouter = require("./routes/propertyRoutes");
 app.use("/api/v1", featureRouter);
+app.use("/api/v1", propertyRouter);
 
 app.use((err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
