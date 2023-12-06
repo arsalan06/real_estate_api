@@ -12,12 +12,19 @@ module.exports = (sequelize, DataTypes) => {
       Feature.belongsToMany(models.Property, {
         through: "PropertyFeature",
         foreignKey: "featureId",
+        as:"propertyfeature"
       });
     }
   }
   Feature.init(
     {
-      featureName: DataTypes.STRING,
+      featureName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: {
+          msg: "This title aready exist",
+        },
+      },
     },
     {
       sequelize,

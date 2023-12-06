@@ -10,28 +10,44 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       contractStatusId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: { model: "ContractStatuses", key: "id" },
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
+        validate: {
+          notEmpty: { msg: "Contract status id is required" },
+        },
       },
       propertyId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: { model: "Properties", key: "id" },
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
+        validate: {
+          notEmpty: { msg: "Property id is required" },
+        },
       },
       clientId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: { model: "Clients", key: "id" },
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
+        validate: {
+          notEmpty: { msg: "Client id is required" },
+        },
       },
       employeeId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: { model: "Employees", key: "id" },
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
+        validate: {
+          notEmpty: { msg: "Employee id  is required" },
+        },
       },
       contractDocument: {
         type: Sequelize.STRING,

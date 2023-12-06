@@ -10,13 +10,20 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       propertyTypeId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: { model: "PropertyTypes", key: "id" },
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
+        validate: {
+          notEmpty: { msg: "propertyTypeId is required" },
+        },
       },
       address: {
         type: Sequelize.STRING,
+        validate:{
+          notEmpty:{msg:"Address is required"}
+        }
       },
       city: {
         type: Sequelize.STRING,

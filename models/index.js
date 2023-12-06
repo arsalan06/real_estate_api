@@ -37,7 +37,14 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
+console.log("PRINT")
+  Object.keys(db.Offer.associations).forEach((name) => {
+    console.log(db.Offer.associations[name]);
+    console.log(name)
+  })
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
 
 module.exports = db;

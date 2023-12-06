@@ -10,22 +10,34 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       propertyId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: { model: "Properties", key: "id" },
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
+        validate: {
+          notEmpty: { msg: "Property id is required" },
+        },
       },
       employeeId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: { model: "Employees", key: "id" },
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
+        validate: {
+          notEmpty: { msg: "Employee id is required" },
+        },
       },
       roleId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: { model: "RoleTypes", key: "id" },
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
+        validate: {
+          notEmpty: { msg: "Role id is required" },
+        },
       },
       startDate: {
         type: Sequelize.DATE,

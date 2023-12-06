@@ -10,16 +10,24 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       propertyId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: { model: "Properties", key: "id" },
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
+        validate: {
+          notEmpty: { msg: "Property id is required" },
+        },
       },
       clientId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: { model: "Clients", key: "id" },
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
+        validate: {
+          notEmpty: { msg: "Client id is required" },
+        },
       },
       createdAt: {
         allowNull: false,

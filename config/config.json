@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "maq@ch1122",
-    "database": "property",
+    "database": "real_estate",
     "host": "localhost",
     "dialect": "mysql"
   },

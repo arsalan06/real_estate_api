@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Contract.belongsTo(models.ContractStatus, {
         foreignKey: "contractStatusId",
+        as:"contractstatus"
       });
     }
   }

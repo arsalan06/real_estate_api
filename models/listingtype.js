@@ -17,7 +17,13 @@ module.exports = (sequelize, DataTypes) => {
   }
   ListingType.init(
     {
-      title: DataTypes.STRING,
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: {
+          msg: "This title aready exist",
+        },
+      },
     },
     {
       sequelize,

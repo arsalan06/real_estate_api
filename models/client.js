@@ -9,21 +9,30 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // Client.belongsToMany(models.Property, {
+      //   through: "ClientInterest",
+      //   foreignKey: "clientId",
+      // });
+
       Client.belongsToMany(models.Property, {
         through: "ClientInterest",
-        foreignKey: "clientId",
-      });
+        as: "interests",
+        foreignKey: "clientId"
+      }) 
       Client.belongsToMany(models.Inspection, {
         through: "ClientInspection",
+        as: "inspections",
         foreignKey: "clientId",
       });
       Client.belongsToMany(models.Property, {
         through: "Offer",
-        foreignKey: "clientid",
+        as: "offers",
+        foreignKey: "clientId",
       });
       Client.belongsToMany(models.Property, {
         through: "Contract",
-        foreignKey: "clientid",
+        as: "contract",
+        foreignKey: "clientId",
       });
     }
   }

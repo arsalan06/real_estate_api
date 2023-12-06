@@ -1,6 +1,11 @@
-const { PropertyType, sequelize, Property } = require("../models");
+const {
+  PropertyType,
+  sequelize,
+  Property,
+  PropertyFeature,
+  PropertyEmployee,
+} = require("../models");
 const appError = require("../utils/appError");
-const t = await sequelize.transaction();
 exports.addPropertyType = async (req, res) => {
   try {
     const { title } = req.body;
@@ -12,15 +17,16 @@ exports.addPropertyType = async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(err);
+    console.log(error);
     res.status(401).json({
       status: "Fail",
-      message: err,
+      message: error,
     });
   }
 };
 
 exports.addProperty = async (req, res, next) => {
+  const t = await sequelize.transaction();
   try {
     const {
       propertyTypeId,
@@ -33,15 +39,15 @@ exports.addProperty = async (req, res, next) => {
       bathRooms,
       carSpace,
       description,
+      propertyFeatures,
     } = req.body;
-    const propertyTypeExist = await PropertyType.find({
+    const propertyTypeExist = await PropertyType.findOne({
       where: { id: propertyTypeId },
     });
     if (!propertyTypeExist) {
-      await t.rollback();
-      next(new appError("This propert type does not exist", 401));
+      return next(new appError("This property type does not exist", 401));
     }
-    const newProperty = Property.create(
+    const newProperty = await Property.create(
       {
         propertyTypeId,
         address,
@@ -56,19 +62,103 @@ exports.addProperty = async (req, res, next) => {
       },
       { transaction: t }
     );
-    await t.commit();
+    if (!newProperty) {
+      await t.rollback();
+      next(new appError("This property does not upload", 401));
+    }
+    const propertyId = newProperty.id;
+    const featureArray = propertyFeatures.map((featureId) => {
+      return {
+        propertyId,
+        featureId,
+      };
+    });
+    const features = await PropertyFeature.bulkCreate(featureArray, {
+      transaction: t,
+    });
+    if (!features) {
+      await t.rollback();
+    }
     res.status(201).json({
       status: "success",
       data: {
-        property: newProperty,
+        message: "property create successfully",
+      },
+    });
+    await t.commit();
+  } catch (error) {
+    await t.rollback();
+    res.status(401).json({
+      status: "Fail",
+      message: error,
+    });
+  }
+};
+
+exports.addPropertyImages = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const propertyExist = await Property.findOne({
+      where: { id: id },
+    });
+    if (!propertyExist) {
+      console.log("in error class");
+      return next(new appError("This property does not Exist", 401));
+    }
+    let projectImages = req.files.map((file) => file.path);
+    propertyExist.propertyImages = projectImages;
+    await propertyExist.save();
+    res.status(200).json({
+      status: "success",
+      data: {
+        message: "images uploads successfully",
       },
     });
   } catch (error) {
-    await t.rollback();
-    console.log(err);
     res.status(401).json({
       status: "Fail",
-      message: err,
+      message: error,
+    });
+  }
+};
+
+exports.getAllProperty = async (req, res, next) => {
+  try {
+    const allProperties = await Property.findAll();
+    res.status(200).json({
+      status: "success",
+      data: {
+        data: allProperties,
+      },
+    });
+  } catch (error) {
+    res.status(401).json({
+      status: "Fail",
+      message: error,
+    });
+  }
+};
+
+exports.addPropertyEmployee = async (req, res, next) => {
+  try {
+    const { propertyId, employeeId, roleId, startDate, endDate } = req.body;
+    const propertyEmployee = await PropertyEmployee.create({
+      propertyId,
+      employeeId,
+      roleId,
+      startDate,
+      endDate,
+    });
+    res.status(200).json({
+      status: "success",
+      data: {
+        data: propertyEmployee,
+      },
+    });
+  } catch (error) {
+    res.status(401).json({
+      status: "Fail",
+      message: error,
     });
   }
 };

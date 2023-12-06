@@ -10,25 +10,41 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       propertyId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: { model: "Properties", key: "id" },
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
+        validate: {
+          notEmpty: { msg: "Property id is required" },
+        },
       },
       listingStatusId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: { model: "ListingStatuses", key: "id" },
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
+        validate: {
+          notEmpty: { msg: "Listeing status id is required" },
+        },
       },
       listingTypeId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: { model: "ListingTypes", key: "id" },
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
+        validate: {
+          notEmpty: { msg: "Listing type id is required" },
+        },
       },
       price: {
+        allowNull: false,
         type: Sequelize.INTEGER,
+        validate: {
+          notEmpty: { msg: "Price is required" },
+        },
       },
       createdAt: {
         allowNull: false,

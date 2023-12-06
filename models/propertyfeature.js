@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class PropertyFeature extends Model {
     /**
@@ -13,10 +11,27 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  PropertyFeature.init({
-  }, {
-    sequelize,
-    modelName: 'PropertyFeature',
-  });
+  PropertyFeature.init(
+    {
+      propertyId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: { msg: "Property id is required" },
+        },
+      },
+      featureId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        validate: {
+          notEmpty: { msg: "Feature id is required" },
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: "PropertyFeature",
+    }
+  );
   return PropertyFeature;
 };
