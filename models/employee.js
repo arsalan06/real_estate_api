@@ -20,14 +20,14 @@ module.exports = (sequelize, DataTypes) => {
         as: "propertyemployee",
       });
       Employee.belongsToMany(models.Property, {
-        through: "Inpection",
+        through: "Inspection",
+        as: "inspections",
         foreignKey: "employeeId",
-        as: "inspection",
       });
       Employee.belongsToMany(models.Property, {
         through: "Contract",
+        as: "contractes",
         foreignKey: "employeeId",
-        as: "contract",
       });
     }
   }

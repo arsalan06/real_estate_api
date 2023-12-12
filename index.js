@@ -13,12 +13,16 @@ const listingRouter = require("./routes/listingRoutes");
 const employeeRouter = require("./routes/employeeRoutes");
 const clientRouter = require("./routes/clientRoutes");
 const offerRouter = require("./routes/offerRoutes");
+const contractRouter = require("./routes/contractRoutes");
+const inspectionRouter = require("./routes/inspectionRoutes");
 app.use("/api/v1", featureRouter);
 app.use("/api/v1", propertyRouter);
 app.use("/api/v1", listingRouter);
 app.use("/api/v1", employeeRouter);
 app.use("/api/v1", clientRouter);
 app.use("/api/v1", offerRouter);
+app.use("/api/v1", contractRouter);
+app.use("/api/v1", inspectionRouter);
 
 app.use((err, req, res, next) => {
   err.statusCode = err.statusCode || 500;

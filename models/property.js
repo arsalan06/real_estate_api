@@ -9,36 +9,47 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Property.belongsTo(models.PropertyType, { foreignKey: "propertyTypeId", as:"propertystatus" });
+      Property.belongsTo(models.PropertyType, {
+        foreignKey: "propertyTypeId",
+        as: "propertystatus",
+      });
       Property.belongsToMany(models.Feature, {
         through: "PropertyFeature",
-        as:"propertyfeature",
+        as: "propertyfeature",
         foreignKey: "propertyId",
       });
       Property.belongsToMany(models.Employee, {
         through: "PropertyEmployee",
-        as:"propertyemployee",
+        as: "propertyemployee",
         foreignKey: "propertyId",
       });
-      Property.hasOne(models.Listing, { foreignKey: "propertyId", as:"listing" });
+      Property.hasOne(models.Listing, {
+        foreignKey: "propertyId",
+        as: "listing",
+      });
       Property.belongsToMany(models.Employee, {
         through: "Inspection",
-        as:"inspection",
+        as: "inspections",
         foreignKey: "propertyId",
       });
       Property.belongsToMany(models.Client, {
         through: "ClientInterest",
         as: "clients",
         foreignKey: "propertyId",
-      }) 
+      });
       Property.belongsToMany(models.Client, {
         through: "Offer",
         as: "offers",
-        foreignKey: "propertyId"
-      })
+        foreignKey: "propertyId",
+      });
       Property.belongsToMany(models.Client, {
         through: "Contract",
-        as: "contract",
+        as: "contractse",
+        foreignKey: "propertyId",
+      });
+      Property.belongsToMany(models.Employee, {
+        through: "Contract",
+        as: "contractes",
         foreignKey: "propertyId",
       });
     }

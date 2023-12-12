@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "listingTypeId",
         as: "Listing",
       });
+      ListingType.hasMany(models.Contract, {
+        foreignKey: "listingTypeId",
+        as: "Listingtype",
+      });
     }
   }
   ListingType.init(

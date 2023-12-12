@@ -19,11 +19,11 @@ module.exports = (sequelize, DataTypes) => {
         as: "interests",
         foreignKey: "clientId"
       }) 
-      Client.belongsToMany(models.Inspection, {
-        through: "ClientInspection",
-        as: "inspections",
-        foreignKey: "clientId",
-      });
+      // Client.belongsToMany(models.Inspection, {
+      //   through: "ClientInspection",
+      //   as: "inspections",
+      //   foreignKey: "clientId",
+      // });
       Client.belongsToMany(models.Property, {
         through: "Offer",
         as: "offers",
@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       Client.belongsToMany(models.Property, {
         through: "Contract",
-        as: "contract",
+        as: "contractse",
         foreignKey: "clientId",
       });
     }

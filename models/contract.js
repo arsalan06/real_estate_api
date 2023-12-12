@@ -11,7 +11,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Contract.belongsTo(models.ContractStatus, {
         foreignKey: "contractStatusId",
-        as:"contractstatus"
+        as: "contractstatus",
+      });
+      Contract.belongsTo(models.ListingType, {
+        foreignKey: "listingTypeId",
+        as: "Listingtype",
       });
     }
   }
@@ -21,6 +25,11 @@ module.exports = (sequelize, DataTypes) => {
       signedDate: DataTypes.DATE,
       startDate: DataTypes.DATE,
       endDate: DataTypes.DATE,
+      clientId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        
+      },
     },
     {
       sequelize,
